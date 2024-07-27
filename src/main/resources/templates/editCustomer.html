@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Customer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .edit-container {
+            background-color: rgb(192, 192, 192);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        .edit-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .edit-container label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .edit-container input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .edit-container button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .edit-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="edit-container">
+        <h1>Edit Customer</h1>
+        <form th:action="@{/customers/edit/{id}(id=${customer.id})}" method="post" th:object="${customer}">
+            <div>
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" th:field="*{first_name}" required>
+            </div>
+            <div>
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" th:field="*{last_name}" required>
+            </div>
+            <div>
+                <label for="street">Street:</label>
+                <input type="text" id="street" th:field="*{street}" required>
+            </div>
+            <div>
+                <label for="address">Address:</label>
+                <input type="text" id="address" th:field="*{address}" required>
+            </div>
+            <div>
+                <label for="city">City:</label>
+                <input type="text" id="city" th:field="*{city}" required>
+            </div>
+            <div>
+                <label for="state">State:</label>
+                <input type="text" id="state" th:field="*{state}" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" th:field="*{email}" required>
+            </div>
+            <div>
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" th:field="*{phone}" required>
+            </div>
+            <div>
+                <button type="submit">Update Customer</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

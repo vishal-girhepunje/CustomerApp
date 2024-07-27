@@ -1,0 +1,245 @@
+					<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 95%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgb(192, 192, 192);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .actions button, .actions a {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #fff;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .actions button {
+            background-color: #007bff;
+        }
+
+        .actions button:hover {
+            background-color: #0056b3;
+        }
+
+        .actions a.add {
+            background-color: #28a745;
+        }
+
+        .actions a.add:hover {
+            background-color: #218838;
+        }
+
+        .actions a.sync {
+            background-color: #ff9800;
+        }
+
+        .actions a.sync:hover {
+            background-color: #e68900;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        form select, form input[type="text"], form button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        form select {
+            width: 150px;
+        }
+
+        form input[type="text"] {
+            width: 200px;
+        }
+
+        form button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .table-actions a, .table-actions button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #fff;
+            margin-right: 5px;
+        }
+
+        .table-actions a.edit {
+            background-color: #4CAF50;
+        }
+
+        .table-actions a.delete {
+            background-color: #f44336;
+        }
+
+        .table-actions a:hover, .table-actions button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Customer List</h1>
+        
+        <div class="actions">
+            <form th:action="@{/customers}" method="get">
+                <select name="searchField">
+                    <option value="">Select Field</option>
+                    <option value="firstName">First Name</option>
+                    <option value="lastName">Last Name</option>
+                    <option value="city">City</option>
+                    <option value="email">Email</option>
+                    <option value="phone">Phone</option>
+                </select>
+                <input type="text" name="search" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+            <div>
+                <a href="#" class="sync" onclick="syncCustomers()">Sync</a>
+                <a th:href="@{/customers/new}" class="add">Add New Customer</a>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Street</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="customer : ${customers}">
+                    <td th:text="${customer.first_name}">First Name</td>
+                    <td th:text="${customer.last_name}">Last Name</td>
+                    <td th:text="${customer.street}">Street</td>
+                    <td th:text="${customer.address}">Address</td>
+                    <td th:text="${customer.city}">City</td>
+                    <td th:text="${customer.state}">State</td>
+                    <td th:text="${customer.email}">Email</td>
+                    <td th:text="${customer.phone}">Phone</td>
+                    <td class="table-actions">
+                        <a th:href="@{/customers/edit/{id}(id=${customer.id})}" class="edit">Edit</a>
+                        <a th:href="@{/customers/delete/{id}(id=${customer.id})}" class="delete" onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+		 <div class="pagination">
+            <ul>
+                <li th:classappend="${customerPage.hasPrevious()} ? '' : 'disabled'">
+                    <a th:href="@{/customers(page=${customerPage.number - 1}, size=${customerPage.size}, search=${search})}">&laquo; Previous</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(0, customerPage.totalPages - 1)}"
+                    th:classappend="${i == customerPage.number} ? 'active' : ''">
+                    <a th:href="@{/customers(page=${i}, size=${customerPage.size}, search=${search})}" th:text="${i + 1}">1</a>
+                </li>
+                <li th:classappend="${customerPage.hasNext()} ? '' : 'disabled'">
+                    <a th:href="@{/customers(page=${customerPage.number + 1}, size=${customerPage.size}, search=${search})}">Next &raquo;</a>
+                </li>
+            </ul>
+        </div>	
+    </div>
+
+    <script>
+      function syncCustomers() {
+            fetch('/api/customers/sync', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' // Ensures cookies are sent with the request
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(message => {
+                console.log('Success:', message);
+                alert('Customers synced successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to sync customers.');
+            });
+        }
+    </script>
+</body>
+</html>

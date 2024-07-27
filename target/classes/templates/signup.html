@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Signup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://img.freepik.com/free-photo/blue-office-stationery-set-with-laptop_23-2147843325.jpg?t=st=1722069991~exp=1722073591~hmac=d3b70dff0f7e59baf2723fd69049dfb8a0da7620b4dee2605636184aa623836c&w=996'); /* Replace with your image URL */
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .signup-container {
+            background-color: rgb(182, 176, 206);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .signup-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .signup-container label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .signup-container input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .signup-container button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #28a745;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .signup-container button:hover {
+            background-color: #218838;
+        }
+
+        .signup-container .login-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .signup-container .login-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .signup-container .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h1>Signup</h1>
+        <form th:action="@{/auth/signup}" method="post">
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <button type="submit">Signup</button>
+            </div>
+        </form>
+        <div class="login-link">
+            <a href="/auth/login">Already have an account? Login</a>
+        </div>
+    </div>
+</body>
+</html>
