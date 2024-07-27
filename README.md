@@ -45,14 +45,14 @@ To set up and run the application on your local machine, follow these steps:
 
 3. **Create a MySQL Database**
     ```sql
-    CREATE DATABASE customerdb;
+    CREATE DATABASE Sunbase_Customer_App;
     ```
 
 4. **Configure Database Credentials**
 
    Update the `application.properties` file with your MySQL database credentials:
     ```properties
-    spring.datasource.url=jdbc:mysql://localhost:3306/customerdb
+    spring.datasource.url=jdbc:mysql://localhost:3306/Sunbase_Customer_App
     spring.datasource.username=root
     spring.datasource.password=root
     ```

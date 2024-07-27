@@ -43,12 +43,6 @@ public class CustomerController {
         return ResponseEntity.noContent().build();
     }
 
-//    @GetMapping
-//    public ResponseEntity<Page<Customer>> getCustomers(@RequestParam int page, @RequestParam int size, @RequestParam(required = false) String search) {
-//        Pageable pageable = PageRequest.of(page, size, Sort.by("firstName").ascending());
-//        return ResponseEntity.ok(customerService.getCustomers(pageable, search));
-//    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.getCustomerById(id));

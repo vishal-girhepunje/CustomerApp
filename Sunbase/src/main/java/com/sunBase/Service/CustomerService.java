@@ -13,7 +13,6 @@ public interface CustomerService {
 	  
 	  public Customer updateCustomer(Long id, Customer customerDetails);
 	  
-//	  public List<Customer> findAllCustomer(String search) ;
 	  public Page<Customer> findAllCustomer(String search, Pageable pageable);
 	
 	   public Customer getCustomerById(Long id) ;

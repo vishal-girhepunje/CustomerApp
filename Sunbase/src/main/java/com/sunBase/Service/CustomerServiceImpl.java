@@ -38,8 +38,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 		Optional<Customer> optionalCustomer = customerRepository.findById(id);
 
 		if (!optionalCustomer.isPresent()) {
-			// Handle the case where the customer does not exist (throw an exception or
-			// return a specific result)
 			throw new RuntimeException("Customer with ID " + id + " not found");
 		}
 
@@ -75,11 +73,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 		// Save the updated customer
 		return customerRepository.save(existingCustomer);
 	}
-
-//    public Page<Customer> getCustomers(Pageable pageable, String search) {
-//        return customerRepository.findByFirstNameContainingOrLastNameContaining(search, search, pageable);
-//    }
-
 	public Customer getCustomerById(Long id) {
 		Optional<Customer> cus = customerRepository.findById(id);
 		return cus.get();
@@ -88,13 +81,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 	public void deleteCustomer(Long id) {
 		customerRepository.deleteById(id);
 	}
-
-//	public List<Customer> findAllCustomer(String search, Pageable pageable) {
-//		if (search != null && !search.isEmpty()) {
-//			return customerRepository.findByFirstNameContaining(search,pageable);
-//		}
-//		return customerRepository.findAll(pageable);
-//	}
 	
 	public Page<Customer> findAllCustomer(String search, Pageable pageable) {
 	    if (search != null && !search.isEmpty()) {
@@ -163,14 +149,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
         }
     }
 	
-	
-	
-	
-	
-	
-	
-	//for getting username i.e email from database to authenticate 
-
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
